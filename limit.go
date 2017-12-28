@@ -18,7 +18,7 @@ import (
 // number of goroutines, for example the number of active in-flight
 // HTTP requests.
 //
-//	l := limit.NewLimit(4)
+//	l := limit.New(4)
 //	...
 //	go func() {
 //	    l.Start()
@@ -35,8 +35,9 @@ type Limit struct {
 	cond        *sync.Cond
 }
 
-// NewLimit returns a new concurrency limit
-func NewLimit(parallel uint32) *Limit {
+// New returns a new concurrency limit that allows parallel
+// concurrent executions
+func New(parallel uint32) *Limit {
 	l := &Limit{
 		concurrency: parallel,
 		lock:        &sync.RWMutex{},
